@@ -1,0 +1,19 @@
+{
+  "name": "algorithm-javascript",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TDD로 구현하는 자료구조/알고리즘 (TypeScript + Vitest). algorithm_python 저장소의 구조를 참고합니다.",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "@vitest/coverage-v8": "^2.1.4",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  }
+}
