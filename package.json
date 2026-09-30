@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@12.4.2",
   "description": "TDD로 구현하는 자료구조/알고리즘 (TypeScript + Vitest). algorithm_python 저장소의 구조를 참고합니다.",
   "scripts": {
     "test": "vitest run",
