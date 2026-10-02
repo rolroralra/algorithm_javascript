@@ -1,4 +1,5 @@
 import { notImplemented } from '../shared/notImplemented';
+import { randomInt } from "node:crypto";
 
 /** "Should swap a before b" predicate — true means a belongs after b. Default sorts ascending. */
 export type SortComparator = (a: number, b: number) => boolean;
@@ -58,11 +59,12 @@ export class Sort {
   }
 
   static mergeSort(array: number[], comp: SortComparator = defaultComparator): void {
-    notImplemented('Sort.mergeSort');
+    Sort.mergeSortInternal(array, 0, array.length, comp)
   }
 
+
   static quickSort(array: number[], comp: SortComparator = defaultComparator): void {
-    notImplemented('Sort.quickSort');
+    Sort.quickSortInternal(array, 0, array.length, comp)
   }
 
   /** Should delegate to `Heap.heapSort` from '../heap/heap', mirroring the Python original. */
@@ -117,5 +119,64 @@ export class Sort {
     const temp = array[index1];
     array[index1] = array[index2];
     array[index2] = temp;
+  }
+
+  private static mergeSortInternal(array: number[], startIndexInclusive: number = 0, endIndexExclusive: number = array.length, comp: SortComparator = defaultComparator): void {
+    if (startIndexInclusive >= endIndexExclusive - 1) {
+      return
+    }
+
+    const midIndex = Math.floor((startIndexInclusive + endIndexExclusive) / 2)
+
+    Sort.mergeSortInternal(array, startIndexInclusive, midIndex, comp)
+    Sort.mergeSortInternal(array, midIndex, endIndexExclusive, comp)
+    Sort.merge(array, startIndexInclusive, endIndexExclusive, comp)
+  }
+
+  private static merge(array: number[], startIndexInclusive: number, endIndexExclusive: number, comp: SortComparator = defaultComparator) {
+    let sortedArray = array.slice(startIndexInclusive, endIndexExclusive)
+
+    const midIndex = Math.floor((startIndexInclusive + endIndexExclusive) / 2)
+    let [i, j, k] = [startIndexInclusive, midIndex, 0]
+
+    while (i < midIndex && j < endIndexExclusive) {
+      if (comp(array[i]!, array[j]!)) {
+        sortedArray[k++] = array[j++]!
+      } else {
+        sortedArray[k++] = array[i++]!
+      }
+    }
+
+    while(i < midIndex) {
+      sortedArray[k++] = array[i++]!
+    }
+
+    while (j < endIndexExclusive) {
+      sortedArray[k++] = array[j++]!
+    }
+
+    array.splice(startIndexInclusive, sortedArray.length, ...sortedArray)
+  }
+
+  private static quickSortInternal(array: number[], startIndexInclusive: number = 0, endIndexExclusive: number = array.length, comp: SortComparator = defaultComparator) {
+    if (startIndexInclusive >= endIndexExclusive - 1) {
+      return
+    }
+
+    const pivotIndex = randomInt(endIndexExclusive - startIndexInclusive) + startIndexInclusive;
+    [array[startIndexInclusive], array[pivotIndex]] = [array[pivotIndex]!, array[startIndexInclusive]!]
+
+    let j = startIndexInclusive
+    for (let i = startIndexInclusive; i < endIndexExclusive; i++) {
+      if (comp(array[startIndexInclusive]!, array[i]!)) {
+        j++;
+        [array[i], array[j]] = [array[j]!, array[i]!]
+      }
+    }
+
+    [array[startIndexInclusive], array[j]] = [array[j]!, array[startIndexInclusive]!]
+
+    Sort.quickSortInternal(array, startIndexInclusive, j, comp)
+    Sort.quickSortInternal(array, j + 1, endIndexExclusive, comp)
   }
 }

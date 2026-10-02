@@ -7,8 +7,8 @@ const IN_PLACE_ALGORITHMS: Record<string, SortAlgorithm> = {
   bubbleSort: Sort.bubbleSort,
   insertionSort: Sort.insertionSort,
   // shellSort: Sort.shellSort,
-  // mergeSort: Sort.mergeSort,
-  // quickSort: Sort.quickSort,
+  mergeSort: Sort.mergeSort,
+  quickSort: Sort.quickSort,
   // heapSort: Sort.heapSort,
   // bucketSort distributes by value magnitude, but sorts each bucket with
   // insertionSort, so it is comparison-based just like the others here.
