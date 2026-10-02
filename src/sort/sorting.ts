@@ -26,11 +26,31 @@ export class Sort {
   }
 
   static bubbleSort(array: number[], comp: SortComparator = defaultComparator): void {
-    notImplemented('Sort.bubbleSort');
+    for (let i = 0; i < array.length - 1; i++) {
+      let isSwapped = false
+      for (let j = 0; j < array.length - i - 1; j++) {
+        if (comp(array[j]!, array[j + 1]!)) {
+          [array[j], array[j + 1]] = [array[j + 1]!, array[j]!]
+          isSwapped = true
+        }
+      }
+
+      if (!isSwapped) {
+        break;
+      }
+    }
   }
 
   static insertionSort(array: number[], comp: SortComparator = defaultComparator): void {
-    notImplemented('Sort.insertionSort');
+    for (let i = 1; i < array.length; i++) {
+      for (let j = i; j > 0; j--) {
+        if (!comp(array[j - 1]!, array[j]!)) {
+          break;
+        }
+
+        [array[j - 1], array[j]] = [array[j]!, array[j - 1]!]
+      }
+    }
   }
 
   static shellSort(array: number[], comp: SortComparator = defaultComparator): void {

@@ -4,8 +4,8 @@ import { mulberry32, randomInt } from '../helpers/random';
 
 const IN_PLACE_ALGORITHMS: Record<string, SortAlgorithm> = {
   selectionSort: Sort.selectionSort,
-  // bubbleSort: Sort.bubbleSort,
-  // insertionSort: Sort.insertionSort,
+  bubbleSort: Sort.bubbleSort,
+  insertionSort: Sort.insertionSort,
   // shellSort: Sort.shellSort,
   // mergeSort: Sort.mergeSort,
   // quickSort: Sort.quickSort,
