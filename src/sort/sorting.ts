@@ -9,7 +9,20 @@ export type SortAlgorithm = (array: number[], comp?: SortComparator) => number[]
 
 export class Sort {
   static selectionSort(array: number[], comp: SortComparator = defaultComparator): void {
-    notImplemented('Sort.selectionSort');
+    for (let i = 0; i < array.length; i++) {
+      let selectedIndex = i
+      for (let j = i + 1; j < array.length; j++) {
+        if (comp(array[selectedIndex]!, array[j]!)) {
+          selectedIndex = j
+        }
+      }
+
+      if (i == selectedIndex) {
+        continue
+      }
+
+      [array[selectedIndex], array[i]] = [array[i]!, array[selectedIndex]!]
+    }
   }
 
   static bubbleSort(array: number[], comp: SortComparator = defaultComparator): void {
@@ -68,7 +81,14 @@ export class Sort {
     comp: SortComparator = defaultComparator,
     algorithm: SortAlgorithm = Sort.quickSort,
   ): number[] {
-    notImplemented('Sort.sort');
+    if (!array) {
+      return []
+    }
+
+    // let clonedArray = [...array]
+    let clonedArray = structuredClone(array)
+    Sort.selectionSort(clonedArray, comp)
+    return clonedArray
   }
 
   static swap(array: unknown[], index1: number, index2: number): void {

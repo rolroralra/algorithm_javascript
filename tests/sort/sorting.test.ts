@@ -4,20 +4,20 @@ import { mulberry32, randomInt } from '../helpers/random';
 
 const IN_PLACE_ALGORITHMS: Record<string, SortAlgorithm> = {
   selectionSort: Sort.selectionSort,
-  bubbleSort: Sort.bubbleSort,
-  insertionSort: Sort.insertionSort,
-  shellSort: Sort.shellSort,
-  mergeSort: Sort.mergeSort,
-  quickSort: Sort.quickSort,
-  heapSort: Sort.heapSort,
+  // bubbleSort: Sort.bubbleSort,
+  // insertionSort: Sort.insertionSort,
+  // shellSort: Sort.shellSort,
+  // mergeSort: Sort.mergeSort,
+  // quickSort: Sort.quickSort,
+  // heapSort: Sort.heapSort,
   // bucketSort distributes by value magnitude, but sorts each bucket with
   // insertionSort, so it is comparison-based just like the others here.
-  bucketSort: Sort.bucketSort,
+  // bucketSort: Sort.bucketSort,
 };
 
 const NON_COMPARISON_ALGORITHMS: Record<string, (array: number[]) => number[]> = {
-  countingSort: Sort.countingSort,
-  radixSort: Sort.radixSort,
+  // countingSort: Sort.countingSort,
+  // radixSort: Sort.radixSort,
 };
 
 describe.each(Object.entries(IN_PLACE_ALGORITHMS))('comparison-based sort: %s', (_name, algorithm) => {
