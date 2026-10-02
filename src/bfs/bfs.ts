@@ -3,16 +3,16 @@
  * visitation state stays internal and the function returns nothing.
  *
  * @param graph adjacency list representation of the graph
+ * @param isVisited mutated in place to record which nodes were visited
  * @param startIndex node to start the traversal from
  *
  * @throws RangeError if `startIndex` is out of bounds for `graph`
  */
-export function bfs(graph: number[][], startIndex: number): void {
+export function bfs(graph: number[][], isVisited: boolean[], startIndex: number): void {
   if (startIndex < 0 || startIndex >= graph.length) {
     throw new RangeError('startIndex is out of bounds for the graph');
   }
 
-  let isVisited: boolean[] = new Array(graph.length).fill(false);
   let queue: number[] = [];
 
   isVisited[startIndex] = true
@@ -23,9 +23,9 @@ export function bfs(graph: number[][], startIndex: number): void {
 
     // visit process
 
-    for (let [value, nextIndex] of graph[currIndex]!.entries()) {
-      if (!value) {
-        continue
+    for (let nextIndex of graph[currIndex]!) {
+      if (isVisited[nextIndex]) {
+        continue;
       }
 
       queue.unshift(nextIndex)
