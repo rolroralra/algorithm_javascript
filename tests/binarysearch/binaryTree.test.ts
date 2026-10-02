@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BinaryTree, BinaryTreeNode } from '../../src/binarysearch/binaryTree';
+import { BinaryTree, BinaryTreeNode } from '@/binarysearch/binaryTree';
 
 function buildSampleTree(): BinaryTree<number> {
   const root = new BinaryTreeNode(1);

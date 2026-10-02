@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Heap } from '../../src/heap/heap';
+import { Heap } from '@/heap/heap';
 import { mulberry32, randomInt } from '../helpers/random';
 
 describe('Heap basics', () => {

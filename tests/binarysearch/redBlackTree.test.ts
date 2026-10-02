@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BLACK, RBNode, RedBlackTree } from '../../src/binarysearch/redBlackTree';
+import { BLACK, RBNode, RedBlackTree } from '@/binarysearch/redBlackTree';
 import { mulberry32, randomInt } from '../helpers/random';
 
 /**

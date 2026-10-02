@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   topologicalSortByDfsRecursive,
   topologicalSortByIndegree,
-} from '../../src/topological_sort/topologicalSort';
+} from '@/topological_sort/topologicalSort';
 
 type TopoSort = (adjacencyList: number[][]) => [number[], boolean];
 

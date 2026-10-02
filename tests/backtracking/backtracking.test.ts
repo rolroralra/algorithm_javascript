@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { backtracking, backtrackingInternals } from '../../src/backtracking/backtracking';
+import { backtracking, backtrackingInternals } from '@/backtracking/backtracking';
 
 describe('backtracking', () => {
   it('unwinds all visit marks after full traversal', () => {

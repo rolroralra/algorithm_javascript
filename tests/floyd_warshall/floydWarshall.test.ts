@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { INFINITY, floydWarshall, shortestPath } from '../../src/floyd_warshall/floydWarshall';
+import { INFINITY, floydWarshall, shortestPath } from '@/floyd_warshall/floydWarshall';
 
 function buildMatrix(n: number, edges: [number, number, number][]): number[][] {
   const matrix: number[][] = Array.from({ length: n }, () => new Array(n).fill(INFINITY));

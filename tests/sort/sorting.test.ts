@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Sort, type SortAlgorithm } from '../../src/sort/sorting';
+import { Sort, type SortAlgorithm } from '@/sort/sorting';
 import { mulberry32, randomInt } from '../helpers/random';
 
 const IN_PLACE_ALGORITHMS: Record<string, SortAlgorithm> = {

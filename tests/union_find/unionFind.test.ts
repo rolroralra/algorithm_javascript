@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { UnionFind } from '../../src/union_find/unionFind';
+import { UnionFind } from '@/union_find/unionFind';
 import { mulberry32, randomInt } from '../helpers/random';
 
 describe('UnionFind instance API', () => {

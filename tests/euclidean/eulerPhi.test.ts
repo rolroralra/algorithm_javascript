@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { EulerPhi } from '../../src/euclidean/eulerPhi';
+import { EulerPhi } from '@/euclidean/eulerPhi';
 
 describe('EulerPhi.compute (sieve)', () => {
   it('matches a known value', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { lowerBound } from '../../src/binarysearch/lowerBound';
+import { lowerBound } from '@/binarysearch/lowerBound';
 import { bruteForceLowerBound } from '../helpers/bisect';
 import { mulberry32, randomInt } from '../helpers/random';
 

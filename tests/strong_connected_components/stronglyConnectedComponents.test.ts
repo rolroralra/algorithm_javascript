@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   sccByKosaraju,
   sccByTarjan,
-} from '../../src/strong_connected_components/stronglyConnectedComponents';
+} from '@/strong_connected_components/stronglyConnectedComponents';
 
 type SccImplementation = (adjacencyList: number[][]) => number[][];
 

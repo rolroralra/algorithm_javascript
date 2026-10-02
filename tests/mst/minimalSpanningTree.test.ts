@@ -6,7 +6,7 @@ import {
   mstPrimAlgorithm,
   type WeightedAdjacencyList,
   type WeightedEdge,
-} from '../../src/mst/minimalSpanningTree';
+} from '@/mst/minimalSpanningTree';
 
 describe('mstKruskalAlgorithm', () => {
   it('computes the minimum total length', () => {

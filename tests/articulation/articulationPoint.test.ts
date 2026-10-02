@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { articulationPoints } from '../../src/articulation/articulationPoint';
+import { articulationPoints } from '@/articulation/articulationPoint';
 import { undirectedAdjacencyList } from '../helpers/graph';
 
 describe('articulationPoints', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { SegmentTree } from '../../src/segment_tree/segmentTree';
+import { SegmentTree } from '@/segment_tree/segmentTree';
 
 function buildSumTree(values: number[]): SegmentTree<number> {
   const tree = new SegmentTree<number>(values.length);

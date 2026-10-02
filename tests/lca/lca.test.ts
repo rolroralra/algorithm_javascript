@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { LCA } from '../../src/lca/lca';
+import { LCA } from '@/lca/lca';
 
 function buildSampleTree(): LCA {
   // tree:            0

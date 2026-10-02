@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { binarySearch } from '../../src/binarysearch/binarySearch';
+import { binarySearch } from '@/binarysearch/binarySearch';
 import { mulberry32, randomInt } from '../helpers/random';
 
 describe.each([

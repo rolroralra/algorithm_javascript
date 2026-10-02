@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { dfs } from '../../src/dfs/dfs';
+import { dfs } from '@/dfs/dfs';
 
 describe.each([
   ['iterative', false],

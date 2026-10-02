@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { articulationEdges } from '../../src/articulation/articulationEdge';
+import { articulationEdges } from '@/articulation/articulationEdge';
 import { undirectedAdjacencyList } from '../helpers/graph';
 
 function sortEdges(edges: [number, number][]): [number, number][] {

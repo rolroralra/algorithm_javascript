@@ -5,7 +5,7 @@ import {
   bellmanFordInternals,
   shortestPath,
   type WeightedEdge,
-} from '../../src/bellman_ford/bellmanFord';
+} from '@/bellman_ford/bellmanFord';
 
 /** prevIndex for a straight chain 0 -> 1 -> 2 -> ... -> size - 1. */
 function chainPrevIndex(size: number): number[] {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bfs } from '../../src/bfs/bfs';
+import { bfs } from '@/bfs/bfs';
 
 // bfs() keeps its visited-state internal and returns nothing, so these tests can only
 // confirm it traverses without error for each graph shape.

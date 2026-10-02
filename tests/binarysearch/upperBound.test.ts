@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { upperBound } from '../../src/binarysearch/upperBound';
+import { upperBound } from '@/binarysearch/upperBound';
 import { bruteForceUpperBound } from '../helpers/bisect';
 import { mulberry32, randomInt } from '../helpers/random';
 

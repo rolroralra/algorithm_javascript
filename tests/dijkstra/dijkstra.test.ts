@@ -5,7 +5,7 @@ import {
   dijkstraByPriorityQueue,
   shortestPath,
   type WeightedAdjacencyList,
-} from '../../src/dijkstra/dijkstra';
+} from '@/dijkstra/dijkstra';
 
 function sampleGraph(): WeightedAdjacencyList {
   // 0 --1--> 1 --2--> 2

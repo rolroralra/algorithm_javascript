@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { eratosthenesSieve, isPrime } from '../../src/eratosthenes/eratosthenesSieve';
+import { eratosthenesSieve, isPrime } from '@/eratosthenes/eratosthenesSieve';
 
 function naivePrimes(maxNumber: number): number[] {
   const result: number[] = [];

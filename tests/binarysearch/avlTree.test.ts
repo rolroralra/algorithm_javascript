@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AVLNode, AVLTree } from '../../src/binarysearch/avlTree';
+import { AVLNode, AVLTree } from '@/binarysearch/avlTree';
 import { mulberry32, randomInt } from '../helpers/random';
 
 /**

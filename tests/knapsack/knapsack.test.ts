@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { knapsack } from '../../src/knapsack/knapsack';
+import { knapsack } from '@/knapsack/knapsack';
 
 describe('0/1 knapsack', () => {
   it('solves the classic example', () => {

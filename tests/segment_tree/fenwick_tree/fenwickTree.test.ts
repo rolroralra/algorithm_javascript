@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { FenwickTree } from '../../../src/segment_tree/fenwick_tree/fenwickTree';
+import { FenwickTree } from '@/segment_tree/fenwick_tree/fenwickTree';
 import { mulberry32, randomInt } from '../../helpers/random';
 
 /** `values` is 0-indexed; the tree itself is 1-indexed. */

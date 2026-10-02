@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BinaryIndexTree } from '../../../src/segment_tree/binary_index_tree/binaryIndexTree';
+import { BinaryIndexTree } from '@/segment_tree/binary_index_tree/binaryIndexTree';
 import { mulberry32, randomInt } from '../../helpers/random';
 
 function buildTree(values: number[]): BinaryIndexTree {

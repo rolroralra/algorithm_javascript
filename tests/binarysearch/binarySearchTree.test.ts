@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BSTNode, BinarySearchTree } from '../../src/binarysearch/binarySearchTree';
+import { BSTNode, BinarySearchTree } from '@/binarysearch/binarySearchTree';
 import { mulberry32, randomInt } from '../helpers/random';
 
 function assertParentConsistency<T>(
