@@ -68,6 +68,10 @@ export class Heap<T = number> {
     return [Heap.leftChildIndex(index), Heap.rightChildIndex(index)];
   }
 
+  isLeafIndex(index: number): boolean {
+    return !this.isValidIndex(Heap.leftChildIndex(index))
+  }
+
   printHeap(): void {
     console.log(this.array);
   }
@@ -85,6 +89,15 @@ export class Heap<T = number> {
   }
 
   private siftUp(index: number): void {
+    if (this.size() > 1000) {
+      this.siftUpByLoop(index)
+      return
+    }
+
+    this.siftUpByRecursive(index)
+  }
+
+  private siftUpByRecursive(index: number): void {
     if (!this.isValidIndex(index) || index === 0) {
       return
     }
@@ -97,7 +110,30 @@ export class Heap<T = number> {
     }
   }
 
+  private siftUpByLoop(index: number): void {
+    let currIndex = index
+    while (currIndex > 0) {
+      let parentIndex = Heap.parentIndex(currIndex)
+
+      if (!this.comp(this.array[parentIndex]!, this.array[currIndex]!)) {
+        break;
+      }
+
+      [this.array[parentIndex], this.array[currIndex]] = [this.array[currIndex]!, this.array[parentIndex]!]
+      currIndex = parentIndex
+    }
+  }
+
   private siftDown(index: number): void {
+    if (this.size() > 1000) {
+      this.siftDownByLoop(index)
+      return
+    }
+
+    this.siftDownByRecursive(index)
+  }
+
+  private siftDownByRecursive(index: number): void {
     if (!this.isValidIndex(index)) {
       return
     }
@@ -106,7 +142,7 @@ export class Heap<T = number> {
 
     let candidateIndex = index
 
-    if (this.isValidIndex(leftChildIndex) && this.comp(this.array[index]!, this.array[leftChildIndex]!)) {
+    if (this.isValidIndex(leftChildIndex) && this.comp(this.array[candidateIndex]!, this.array[leftChildIndex]!)) {
       candidateIndex = leftChildIndex
     }
 
@@ -117,6 +153,29 @@ export class Heap<T = number> {
     if (candidateIndex != index) {
       [this.array[index], this.array[candidateIndex]] = [this.array[candidateIndex]!, this.array[index]!]
       this.siftDown(candidateIndex)
+    }
+  }
+
+  private siftDownByLoop(index: number): void {
+    let currIndex = index
+    while (!this.isLeafIndex(currIndex)) {
+      const [leftChildIndex, rightChildIndex] = this.childIndices(currIndex)
+      let candidateIndex = currIndex
+
+      if (this.isValidIndex(leftChildIndex) && this.comp(this.array[candidateIndex]!, this.array[leftChildIndex]!)) {
+        candidateIndex = leftChildIndex
+      }
+
+      if (this.isValidIndex(rightChildIndex) && this.comp(this.array[candidateIndex]!, this.array[rightChildIndex]!)) {
+        candidateIndex = rightChildIndex
+      }
+
+      if (candidateIndex == currIndex) {
+        break;
+      }
+
+      [this.array[currIndex], this.array[candidateIndex]] = [this.array[candidateIndex]!, this.array[currIndex]!]
+      currIndex = candidateIndex
     }
   }
 
@@ -137,12 +196,13 @@ export class Heap<T = number> {
     inputArray: T[],
     compareFunction: CompareFunction<T> = defaultCompareFunction as unknown as CompareFunction<T>,
   ): void {
-    let result: T[] = []
     const heap = new Heap(inputArray, compareFunction)
+
+    let sortedArray: T[] = []
     while (!heap.isEmpty()) {
-      result.push(heap.pop()!)
+      sortedArray.push(heap.pop()!)
     }
 
-    inputArray.splice(0, result.length, ...result)
+    inputArray.splice(0, sortedArray.length, ...sortedArray)
   }
 }
