@@ -1,5 +1,3 @@
-import { notImplemented } from '../shared/notImplemented';
-
 export class UnionFind {
   parent: number[];
 
@@ -11,49 +9,112 @@ export class UnionFind {
   }
 
   union(a: number, b: number): void {
-    notImplemented('UnionFind.union');
+    let parentA = this.find(a);
+    let parentB = this.find(b);
+
+    if (parentA === parentB) {
+      return;
+    }
+
+    if (this.rank(parentA) < this.rank(parentB)) {
+      [parentA, parentB] = [parentB, parentA];
+    }
+
+    this.parent[parentA]! += this.parent[parentB]!
+    this.parent[parentB] = parentA
   }
 
+  // @ts-ignore
   find(a: number): number {
-    notImplemented('UnionFind.find');
+    if (this.parent.length > 1000) {
+      return this._findByLoop(a)
+    }
+
+    return this._findByRecursive(a)
   }
 
   rank(a: number): number {
-    notImplemented('UnionFind.rank');
+    return -this.parent[this.find(a)]!
   }
 
   isRoot(a: number): boolean {
-    notImplemented('UnionFind.isRoot');
+    return this.parent[a]! < 0
   }
 
-  // `find` must call these as `this._findByRecursive(...)` / `this._findByLoop(...)`
-  // (not a bare local call) so that spying on the prototype — e.g.
-  // `vi.spyOn(UnionFind.prototype, '_findByRecursive')` — can intercept them the way
-  // Python's monkeypatch does.
   _findByRecursive(a: number): number {
-    notImplemented('UnionFind._findByRecursive');
+    if (this.isRoot(a)) {
+      return a
+    }
+
+    this.parent[a] = this._findByRecursive(this.parent[a]!)
+    return this.parent[a]
   }
 
   _findByLoop(a: number): number {
-    notImplemented('UnionFind._findByLoop');
+    let result = a
+
+    while (this.parent[result]! >= 0) {
+      result = this.parent[result]!
+    }
+
+    let curr = a
+    while (this.parent[curr]! >= 0) {
+      this.parent[curr] = result;
+      curr = this.parent[curr]!;
+    }
+
+    return result;
   }
 
   // `findStatic` must call these through the class (`UnionFind.findByRecursive(...)`),
   // not a bare local reference, so spying on the static property — e.g.
   // `vi.spyOn(UnionFind, 'findByRecursive')` — can intercept them.
   static unionStatic(parent: number[], a: number, b: number): void {
-    notImplemented('UnionFind.unionStatic');
+    let parentA = UnionFind.findStatic(parent, a);
+    let parentB = UnionFind.findStatic(parent, b);
+
+    if (parentA === parentB) {
+      return;
+    }
+
+    if (parent[parentA]! > parent[parentB]!) {
+      [parentA, parentB] = [parentB, parentA];
+    }
+
+    parent[parentA]! += parent[parentB]!
+    parent[parentB] = parentA
   }
 
   static findStatic(parent: number[], a: number): number {
-    notImplemented('UnionFind.findStatic');
+    if (parent.length > 1000) {
+      return UnionFind.findByLoop(parent, a);
+    }
+
+    return UnionFind.findByRecursive(parent, a);
   }
 
   static findByRecursive(parent: number[], a: number): number {
-    notImplemented('UnionFind.findByRecursive');
+    if (parent[a]! < 0) {
+      return a
+    }
+
+    parent[a] = UnionFind.findByRecursive(parent, parent[a]!)
+    return parent[a]
   }
 
   static findByLoop(parent: number[], a: number): number {
-    notImplemented('UnionFind.findByLoop');
+    let result = a
+
+    while (parent[result]! >= 0) {
+      result = parent[result]!
+    }
+
+    let curr = a
+    while (parent[curr]! >= 0) {
+      parent[curr] = result;
+      curr = parent[curr]!;
+    }
+
+    return result;
   }
 }

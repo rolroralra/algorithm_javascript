@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { Heap } from '@/heap/heap';
 import { mulberry32, randomInt } from '../helpers/random';
 
@@ -97,5 +97,68 @@ describe('Heap.heapSort', () => {
     const array: number[] = [];
     Heap.heapSort(array);
     expect(array).toEqual([]);
+  });
+});
+
+describe('Heap sift strategy dispatch (size > 1000 uses loop, otherwise recursive)', () => {
+  const LOOP_THRESHOLD = 1000;
+
+  it('stays on the recursive siftUp/siftDown while size is at or below the threshold', () => {
+    const siftUpByLoop = vi.spyOn(Heap.prototype as any, 'siftUpByLoop');
+    const siftUpByRecursive = vi.spyOn(Heap.prototype as any, 'siftUpByRecursive');
+    const siftDownByLoop = vi.spyOn(Heap.prototype as any, 'siftDownByLoop');
+    const siftDownByRecursive = vi.spyOn(Heap.prototype as any, 'siftDownByRecursive');
+
+    const heap = new Heap<number>();
+    for (let i = 0; i < LOOP_THRESHOLD; i++) {
+      heap.add(i);
+    }
+    heap.pop();
+
+    expect(siftUpByLoop).not.toHaveBeenCalled();
+    expect(siftDownByLoop).not.toHaveBeenCalled();
+    expect(siftUpByRecursive).toHaveBeenCalled();
+    expect(siftDownByRecursive).toHaveBeenCalled();
+
+    vi.restoreAllMocks();
+  });
+
+  it('switches to the loop-based siftUp/siftDown once size exceeds the threshold', () => {
+    const siftUpByLoop = vi.spyOn(Heap.prototype as any, 'siftUpByLoop');
+    const siftDownByLoop = vi.spyOn(Heap.prototype as any, 'siftDownByLoop');
+
+    const heap = new Heap<number>();
+    for (let i = 0; i < LOOP_THRESHOLD + 2; i++) {
+      heap.add(i);
+    }
+    heap.pop();
+
+    expect(siftUpByLoop).toHaveBeenCalled();
+    expect(siftDownByLoop).toHaveBeenCalled();
+
+    vi.restoreAllMocks();
+  });
+
+  it('matches sorted order through the loop-based path for a large heap', () => {
+    const random = mulberry32(42);
+    const values = Array.from({ length: LOOP_THRESHOLD + 500 }, () => randomInt(random, -1000, 1000));
+
+    const heap = new Heap<number>();
+    for (const value of values) {
+      heap.add(value);
+    }
+
+    const popped = Array.from({ length: values.length }, () => heap.pop());
+    expect(popped).toEqual([...values].sort((a, b) => a - b));
+  });
+
+  it('Heap.heapSort stays correct for input larger than the loop threshold', () => {
+    const random = mulberry32(7);
+    const array = Array.from({ length: LOOP_THRESHOLD + 500 }, () => randomInt(random, -1000, 1000));
+    const expected = [...array].sort((a, b) => a - b);
+
+    Heap.heapSort(array);
+
+    expect(array).toEqual(expected);
   });
 });
