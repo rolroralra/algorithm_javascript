@@ -1,5 +1,3 @@
-import { notImplemented } from '../shared/notImplemented';
-
 /**
  * Returns true when `a` and `b` violate heap order and must be swapped (`a` is the
  * ancestor, `b` the descendant). The default `(a, b) => a > b` yields a MIN-heap:
@@ -11,14 +9,14 @@ const defaultCompareFunction: CompareFunction<number> = (a, b) => a > b;
 
 export class Heap<T = number> {
   array: T[];
-  compareFunction: CompareFunction<T>;
+  comp: CompareFunction<T>;
 
   constructor(
     inputArray: T[] | null = null,
-    compareFunction: CompareFunction<T> = defaultCompareFunction as unknown as CompareFunction<T>,
+    comp: CompareFunction<T> = defaultCompareFunction as unknown as CompareFunction<T>,
   ) {
     this.array = inputArray ?? [];
-    this.compareFunction = compareFunction;
+    this.comp = comp;
 
     if (this.array.length > 0) {
       this.heapifyBottomUp();
@@ -26,19 +24,32 @@ export class Heap<T = number> {
   }
 
   add(value: T): void {
-    notImplemented('Heap.add');
+    this.array.push(value)
+    this.siftUp(this.array.length - 1)
   }
 
   pop(): T | null {
-    notImplemented('Heap.pop');
+    if (this.isEmpty()) {
+      return null
+    }
+
+    if (this.array.length == 1) {
+      return this.array.pop()!
+    }
+
+    const result = this.peek()
+    this.array[0] = this.array.pop()!
+    this.siftDown(0)
+
+    return result
   }
 
   peek(): T | null {
-    return this.array.length > 0 ? this.array[0]! : null;
-  }
+    if (this.isEmpty()) {
+      return null;
+    }
 
-  getMax(): T | null {
-    return this.array.length > 0 ? this.array[0]! : null;
+    return this.array[0]!
   }
 
   size(): number {
@@ -62,19 +73,51 @@ export class Heap<T = number> {
   }
 
   private heapifyBottomUp(): void {
-    notImplemented('Heap.heapifyBottomUp');
+    for (let i = Heap.parentIndex(this.array.length - 1); i >= 0; i--) {
+      this.siftDown(i)
+    }
   }
 
   private heapifyTopDown(): void {
-    notImplemented('Heap.heapifyTopDown');
+    for (let i = 1; i < this.array.length; i++) {
+      this.siftUp(i)
+    }
   }
 
   private siftUp(index: number): void {
-    notImplemented('Heap.siftUp');
+    if (!this.isValidIndex(index) || index === 0) {
+      return
+    }
+
+    const parentIndex = Heap.parentIndex(index)
+
+    if (this.comp(this.array[parentIndex]!, this.array[index]!)) {
+      [this.array[parentIndex], this.array[index]] = [this.array[index]!, this.array[parentIndex]!]
+      this.siftUp(parentIndex)
+    }
   }
 
   private siftDown(index: number): void {
-    notImplemented('Heap.siftDown');
+    if (!this.isValidIndex(index)) {
+      return
+    }
+
+    const [leftChildIndex, rightChildIndex] = this.childIndices(index)
+
+    let candidateIndex = index
+
+    if (this.isValidIndex(leftChildIndex) && this.comp(this.array[index]!, this.array[leftChildIndex]!)) {
+      candidateIndex = leftChildIndex
+    }
+
+    if (this.isValidIndex(rightChildIndex) && this.comp(this.array[candidateIndex]!, this.array[rightChildIndex]!)) {
+      candidateIndex = rightChildIndex
+    }
+
+    if (candidateIndex != index) {
+      [this.array[index], this.array[candidateIndex]] = [this.array[candidateIndex]!, this.array[index]!]
+      this.siftDown(candidateIndex)
+    }
   }
 
   static parentIndex(index: number): number {
@@ -94,6 +137,12 @@ export class Heap<T = number> {
     inputArray: T[],
     compareFunction: CompareFunction<T> = defaultCompareFunction as unknown as CompareFunction<T>,
   ): void {
-    notImplemented('Heap.heapSort');
+    let result: T[] = []
+    const heap = new Heap(inputArray, compareFunction)
+    while (!heap.isEmpty()) {
+      result.push(heap.pop()!)
+    }
+
+    inputArray.splice(0, result.length, ...result)
   }
 }
