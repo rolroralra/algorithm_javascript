@@ -24,5 +24,21 @@ export function backtracking(
   currIndex: number,
   ...args: unknown[]
 ): void {
-  notImplemented('backtracking');
+  if (backtrackingInternals.prunning()) {
+    return;
+  }
+
+  if (isVisited[currIndex]) {
+    return;
+  }
+
+  isVisited[currIndex] = true
+
+  for (const nextIndex of graph[currIndex]!) {
+    if (!isVisited[nextIndex]) {
+      backtracking(graph, isVisited, nextIndex, ...args)
+    }
+  }
+
+  isVisited[currIndex] = false
 }
