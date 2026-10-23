@@ -18,11 +18,31 @@ export class FenwickTree {
 
   /** Inclusive range sum over the 1-indexed range [startIndex, endIndex]. */
   query(startIndex: number, endIndex: number): number {
-    notImplemented('FenwickTree.query');
+    return this.#queryInternal(endIndex) - this.#queryInternal(startIndex - 1);
   }
 
   /** Adds `diff` to the 1-indexed position `index` (not a replace). */
   update(index: number, diff: number): void {
-    notImplemented('FenwickTree.update');
+    while (index <= this.size) {
+      this.tree[index]! += diff
+
+      index += index & -index
+    }
+  }
+
+  #queryInternal(targetIndex: number): number {
+    if (targetIndex <= 0 || targetIndex > this.size) {
+      return 0;
+    }
+
+    let result: number = 0;
+
+    while (targetIndex > 0) {
+      result += this.tree[targetIndex]!
+
+      targetIndex -= targetIndex & -targetIndex
+    }
+
+    return result
   }
 }
