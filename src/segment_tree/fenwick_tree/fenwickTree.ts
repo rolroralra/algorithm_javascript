@@ -26,7 +26,7 @@ export class FenwickTree {
     while (index <= this.size) {
       this.tree[index]! += diff
 
-      index += index & -index
+      index += this.#takeLowestOneBit(index)
     }
   }
 
@@ -40,9 +40,13 @@ export class FenwickTree {
     while (targetIndex > 0) {
       result += this.tree[targetIndex]!
 
-      targetIndex -= targetIndex & -targetIndex
+      targetIndex -= this.#takeLowestOneBit(targetIndex)
     }
 
     return result
+  }
+
+  #takeLowestOneBit(inputNumber: number): number {
+    return inputNumber & -inputNumber;
   }
 }
